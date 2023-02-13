@@ -2,11 +2,10 @@ import sympy
 from math import comb
 import re
 
-def hrubou_silou(vzorec, q, exp):
-    vzorec = vzorec.replace("q", str(q))
+def hrubou_silou(polynom, q, exp):
     soucet = 0
     for i in range(exp+1):
-        soucet += eval(vzorec.replace("x", str(i)))
+        soucet += eval(polynom.replace("x", str(i)))*q**i
     return soucet
 
 def spocitej_mocniny(stupen):
@@ -21,10 +20,19 @@ def spocitej_mocniny(stupen):
         stupne.append(sympy.simplify(novy_clen))
     return stupne
 
-def vyres(vzorec):
-    vzorec = sympy.sympify(vzorec)
-    print(vzorec.simplify().apart())
+def vyres(polynom, q, x):
+    vzorec = sympy.sympify(polynom)
+    vzorec = vzorec.expand()
+    koeficienty = sympy.Poly(vzorec).all_coeffs()[::-1]
+    stupne = spocitej_mocniny(len(koeficienty) - 1)
+    soucet = 0
+    for index, k in enumerate(koeficienty):
+        val = str(stupne[index])
+        val = eval(val.replace("q", str("q").replace("x", str(x))))*k
+        soucet += val
+    return int(soucet)
 
-
-v = "x(x+1)"
-vyres(v)
+polynom = "100*x**5 - 3*x + 2587*x*(x + 1)"
+q, x = 10, 5
+print(hrubou_silou(polynom, q, x))
+print(vyres(polynom, q, x))
