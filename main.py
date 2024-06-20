@@ -1,3 +1,8 @@
+"""
+Program: Generovani souctovych vzorcu se sympy
+Autor: David Kolar
+"""
+
 import sympy
 from math import comb
 import re
