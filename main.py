@@ -1,6 +1,7 @@
 """
 Program: Generovani souctovych vzorcu se sympy
 Autor: David Kolar
+Email: davidkolar325@gmail.com
 """
 
 import sympy
